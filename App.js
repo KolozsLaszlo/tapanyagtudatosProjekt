@@ -1,225 +1,276 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Pressable, Alert } from 'react-native';
-import { SQLiteProvider, useSQLiteContext } from 'expo-sqlite';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { useState } from 'react';
+import { StatusBar } from "expo-status-bar";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Pressable,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
+import { SQLiteProvider, useSQLiteContext } from "expo-sqlite";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { useState } from "react";
 
-//initialize the database
-const initializeDatabase = async(db) => {
-    try {
-        await db.execAsync(`
-            PRAGMA journal_mode = WAL;
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT UNIQUE,
-                password TEXT
-            );
-        `);
-        console.log('Database initialized !');
-    } catch (error) {
-        console.log('Error while initializing the database : ', error);
-    }
+// **Inicializáljuk az SQLite adatbázist**
+const initializeDatabase = async (db) => {
+  try {
+    await db.execAsync(`
+      PRAGMA journal_mode = WAL;
+      CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT UNIQUE,
+        password TEXT
+      );
+    `);
+    console.log("Database initialized!");
+  } catch (error) {
+    console.log("Error initializing database:", error);
+  }
 };
 
-//create a stack navigator that manages the navigation between 3 screens
+// **Navigátorok**
 const Stack = createStackNavigator();
 
-//We'll have 3 screens : Login, Register and Home
+// **Bejelentkezési képernyő**
+const LoginScreen = ({ navigation }) => {
+  const db = useSQLiteContext();
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
 
+  const handleLogin = async () => {
+    if (userName.length === 0 || password.length === 0) {
+      Alert.alert("Attention", "Please enter both username and password");
+      return;
+    }
+    try {
+      const user = await db.getFirstAsync(
+        "SELECT * FROM users WHERE username = ? AND password = ?",
+        [userName, password]
+      );
+      if (user) {
+        Alert.alert("Success", "Login successful");
+        navigation.replace("Main", { user: userName });
+      } else {
+        Alert.alert("Error", "Invalid username or password");
+      }
+    } catch (error) {
+      console.log("Error during login:", error);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Login</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+        value={userName}
+        onChangeText={setUserName}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+      />
+      <Pressable style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Login</Text>
+      </Pressable>
+      <Pressable
+        style={styles.link}
+        onPress={() => navigation.navigate("Register")}
+      >
+        <Text style={styles.linkText}>Don't have an account? Register</Text>
+      </Pressable>
+    </View>
+  );
+};
+
+// **Regisztrációs képernyő**
+const RegisterScreen = ({ navigation }) => {
+  const db = useSQLiteContext();
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleRegister = async () => {
+    if (!userName || !password || !confirmPassword) {
+      Alert.alert("Attention!", "Please enter all fields.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      Alert.alert("Error", "Passwords do not match");
+      return;
+    }
+    try {
+      const existingUser = await db.getFirstAsync(
+        "SELECT * FROM users WHERE username = ?",
+        [userName]
+      );
+      if (existingUser) {
+        Alert.alert("Error", "Username already exists.");
+        return;
+      }
+
+      await db.runAsync(
+        "INSERT INTO users (username, password) VALUES (?, ?)",
+        [userName, password]
+      );
+      Alert.alert("Success", "Registration successful!");
+      navigation.replace("Main", { user: userName });
+    } catch (error) {
+      console.log("Error during registration:", error);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Register</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+        value={userName}
+        onChangeText={setUserName}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Confirm password"
+        secureTextEntry
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+      />
+      <Pressable style={styles.button} onPress={handleRegister}>
+        <Text style={styles.buttonText}>Register</Text>
+      </Pressable>
+    </View>
+  );
+};
+
+// **Főképernyő egyedi navigációval**
+const MainScreen = ({ route }) => {
+  const { user } = route.params;
+  const [activeScreen, setActiveScreen] = useState("Home");
+
+  return (
+    <View style={styles.container}>
+      {/* Tartalom */}
+      {activeScreen === "Home" && (
+        <Text style={styles.title}>🏠 Home - {user}</Text>
+      )}
+      {activeScreen === "Profile" && (
+        <Text style={styles.title}>👤 Profile - {user}</Text>
+      )}
+
+      {/* Alsó navigációs sáv */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity
+          onPress={() => setActiveScreen("Home")}
+          style={styles.navButton}
+        >
+          <Text
+            style={
+              activeScreen === "Home" ? styles.activeText : styles.inactiveText
+            }
+          >
+            🏠 Home
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setActiveScreen("Profile")}
+          style={styles.navButton}
+        >
+          <Text
+            style={
+              activeScreen === "Profile"
+                ? styles.activeText
+                : styles.inactiveText
+            }
+          >
+            👤 Profile
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
+// **App**
 export default function App() {
   return (
-    <SQLiteProvider databaseName='auth.db' onInit={initializeDatabase}>
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName='Login'>
-                <Stack.Screen name='Login' component={LoginScreen}/>
-                <Stack.Screen name='Register' component={RegisterScreen}/>
-                <Stack.Screen name='Home' component={HomeScreen}/>
-            </Stack.Navigator>
-        </NavigationContainer>
+    <SQLiteProvider databaseName="auth.db" onInit={initializeDatabase}>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Login"
+          screenOptions={{ headerShown: false }}
+        >
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="Main" component={MainScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </SQLiteProvider>
   );
 }
 
-//LoginScreen component
-const LoginScreen = ({navigation}) => {
-
-    const db = useSQLiteContext();
-    const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
-
-    //function to handle login logic
-    const handleLogin = async() => {
-        if(userName.length === 0 || password.length === 0) {
-            Alert.alert('Attention','Please enter both username and password');
-            return;
-        }
-        try {
-            const user = await db.getFirstAsync('SELECT * FROM users WHERE username = ?', [userName]);
-            if (!user) {
-                Alert.alert('Error', 'Username does not exist !');
-                return;
-            }
-            const validUser = await db.getFirstAsync('SELECT * FROM users WHERE username = ? AND password = ?', [userName, password]);
-            if(validUser) {
-                Alert.alert('Success', 'Login successful');
-                navigation.navigate('Home', {user:userName});
-                setUserName('');
-                setPassword('');
-            } else {
-                Alert.alert('Error', 'Incorrect password');
-            }
-        } catch (error) {
-            console.log('Error during login : ', error);
-        }
-    }
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Login</Text>
-            <TextInput 
-                style={styles.input}
-                placeholder='Username'
-                value={userName}
-                onChangeText={setUserName}
-            />
-            <TextInput 
-                style={styles.input}
-                placeholder='Password'
-                secureTextEntry
-                value={password}
-                onChangeText={setPassword}
-            />
-            <Pressable style={styles.button} onPress={handleLogin}>
-                <Text style={styles.buttonText} >Login</Text>
-            </Pressable>
-            <Pressable style={styles.link} onPress={() => navigation.navigate('Register')}>
-                <Text style={styles.linkText}>Don't have an account? Register</Text>
-            </Pressable>
-        </View>
-    )
-}
-
-//RegisterScreenComponent
-const RegisterScreen = ({navigation}) => {
-
-    const db = useSQLiteContext();
-    const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-
-    //function to handle registration logic
-    const handleRegister = async() => {
-        if  (userName.length === 0 || password.length === 0 || confirmPassword.length === 0) {
-            Alert.alert('Attention!', 'Please enter all the fields.');
-            return;
-        }
-        if (password !== confirmPassword) {
-            Alert.alert('Error', 'Password do not match');
-            return;
-        }
-        try {
-            const existingUser = await db.getFirstAsync('SELECT * FROM users WHERE username = ?', [userName]);
-            if (existingUser) {
-                Alert.alert('Error', 'Username already exists.');
-                return;
-            }
-
-            await db.runAsync('INSERT INTO users (username, password) VALUES (?, ?)', [userName, password]);
-            Alert.alert('Success', 'Registration successful!');
-            navigation.navigate('Home', {user : userName});
-        } catch (error) {
-            console.log('Error during registration : ', error);
-        }
-    }
-
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Register</Text>
-            <TextInput 
-                style={styles.input}
-                placeholder='Username'
-                value={userName}
-                onChangeText={setUserName}
-            />
-            <TextInput 
-                style={styles.input}
-                placeholder='Password'
-                secureTextEntry
-                value={password}
-                onChangeText={setPassword}
-            />
-            <TextInput 
-                style={styles.input}
-                placeholder='Confirm password'
-                secureTextEntry
-                value={confirmPassword}
-                onChangeText={setConfirmPassword}
-            />
-            <Pressable style={styles.button} onPress={handleRegister}>
-                <Text style={styles.buttonText} >Register</Text>
-            </Pressable>
-            <Pressable style={styles.link} onPress={() => navigation.navigate('Login')}>
-                <Text style={styles.linkText}>Already have an account? Login</Text>
-            </Pressable>
-        </View>
-    )
-}
-
-//HomeScreen component
-const HomeScreen = ({navigation, route}) => {
-
-    //we'll extract the user parameter from route.params
-    const { user } = route.params;
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Home</Text>
-            <Text style={styles.userText}>Welcome {user} !</Text>
-            <Pressable style={styles.button} onPress={() => navigation.navigate('Login')}>
-                <Text style={styles.buttonText} >Logout</Text>
-            </Pressable>
-        </View>
-    )
-}
-
+// **Stílusok**
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f4f4f4",
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 30,
+    fontWeight: "bold",
   },
   input: {
-    width: '80%',
+    width: "80%",
     padding: 10,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     marginVertical: 5,
   },
   button: {
-    backgroundColor: 'blue',
+    backgroundColor: "blue",
     padding: 10,
     marginVertical: 10,
-    width: '80%',
     borderRadius: 5,
   },
   buttonText: {
-    color: 'white',
-    textAlign: 'center',
+    color: "white",
     fontSize: 18,
+    textAlign: "center",
   },
-  link : {
-    marginTop: 10,
+  bottomNav: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    backgroundColor: "#fff",
+    padding: 10,
+    borderTopWidth: 1,
+    borderTopColor: "#ccc",
   },
-  linkText: {
-    color: 'blue',
+  navButton: {
+    padding: 10,
   },
-  userText: {
-    fontSize: 18,
-    marginBottom: 30,
-  }
+  activeText: {
+    fontWeight: "bold",
+    color: "blue",
+  },
+  inactiveText: {
+    color: "gray",
+  },
 });
