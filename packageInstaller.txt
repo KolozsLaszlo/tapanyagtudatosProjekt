@@ -1,0 +1,9 @@
+# React Navigation csomagok telepítése
+npm install @react-navigation/native
+npm install @react-navigation/stack
+
+# Expo által javasolt függőségek telepítése
+npx expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context react-native-vector-icons @react-native-masked-view/masked-view
+
+# SQLite telepítése
+npx expo install expo-sqlite

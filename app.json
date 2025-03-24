@@ -1,13 +1,14 @@
 {
   "expo": {
-    "name": "login",
-    "slug": "login",
+    "name": "adequate-indigo-candy",
+    "slug": "snack-ac3334de-46be-4ad9-9321-4d29a0c80d0a",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
