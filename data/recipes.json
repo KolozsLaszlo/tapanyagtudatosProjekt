@@ -1,0 +1,30 @@
+{
+  "breakfast": [
+    {
+      "id": 1,
+      "name": "Rántotta",
+      "image": "https://example.com/rantotta.jpg",
+      "ingredients": ["Tojás", "Só", "Bors", "Olaj"],
+      "prep_time": "10 perc",
+      "instructions": "Verd fel a tojásokat, fűszerezd, majd süsd meg serpenyőben."
+    },
+    {
+      "id": 2,
+      "name": "Zabkása",
+      "image": "https://example.com/zabkasa.jpg",
+      "ingredients": ["Zabpehely", "Tej", "Méz", "Gyümölcs"],
+      "prep_time": "5 perc",
+      "instructions": "Forrald fel a tejet, add hozzá a zabpelyhet, és főzd pár percig."
+    }
+  ],
+  "lunch": [
+    {
+      "id": 3,
+      "name": "Csirkepörkölt",
+      "image": "https://example.com/csirkeporkolt.jpg",
+      "ingredients": ["Csirke", "Hagyma", "Paprika", "Paradicsom"],
+      "prep_time": "45 perc",
+      "instructions": "Pirítsd meg a hagymát, add hozzá a húst, és főzd puhára."
+    }
+  ]
+}

@@ -1,4 +1,3 @@
-// src/App.js
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -8,7 +7,9 @@ import RegisterScreen from "./screens/RegisterScreen";
 import MainScreen from "./screens/MainScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import AboutScreen from "./screens/AboutScreen";
-import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
+import RecipeCategoriesScreen from "./screens/RecipesScreen";
+import RecipeListScreen from "./screens/RecipeListScreen";
+import RecipeDetailsScreen from "./screens/RecipeDetailScreen";
 
 const Stack = createStackNavigator();
 
@@ -41,41 +42,14 @@ export default function App() {
           <Stack.Screen name="Main" component={MainScreen} />
           <Stack.Screen name="Settings" component={SettingsScreen} />
           <Stack.Screen name="About" component={AboutScreen} />
+          <Stack.Screen
+            name="RecipeCategories"
+            component={RecipeCategoriesScreen}
+          />
+          <Stack.Screen name="RecipeList" component={RecipeListScreen} />
+          <Stack.Screen name="RecipeDetail" component={RecipeDetailsScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </SQLiteProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  bottomNav: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    position: "absolute",
-    bottom: 0,
-    width: "100%",
-    backgroundColor: "#fff",
-    padding: 10,
-    borderTopWidth: 1,
-    borderTopColor: "#ccc",
-  },
-  navButton: {
-    padding: 10,
-  },
-  activeText: {
-    fontWeight: "bold",
-    color: "blue",
-  },
-  inactiveText: {
-    color: "gray",
-  },
-  logoutButton: {
-    padding: 10,
-    backgroundColor: "red",
-    borderRadius: 5,
-  },
-  logoutText: {
-    color: "white",
-    fontWeight: "bold",
-  },
-});

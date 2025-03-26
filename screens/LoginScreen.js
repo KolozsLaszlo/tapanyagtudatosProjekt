@@ -32,32 +32,70 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text style={{ fontSize: 24 }}>Bejelentkezés</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Bejelentkezés</Text>
       <TextInput
-        style={{ borderWidth: 1, width: "80%", marginVertical: 5 }}
+        style={styles.input}
         placeholder="Felhasználónév"
         value={userName}
         onChangeText={setUserName}
       />
       <TextInput
-        style={{ borderWidth: 1, width: "80%", marginVertical: 5 }}
+        style={styles.input}
         placeholder="Jelszó"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
       />
-      <Pressable
-        onPress={handleLogin}
-        style={{ backgroundColor: "blue", padding: 10, borderRadius: 5 }}
-      >
-        <Text style={{ color: "white" }}>Bejelentkezés</Text>
+      <Pressable onPress={handleLogin} style={styles.button}>
+        <Text style={styles.buttonText}>Bejelentkezés</Text>
       </Pressable>
       <Pressable onPress={() => navigation.navigate("Register")}>
-        <Text>Nincs fiókja? Regisztráció</Text>
+        <Text style={styles.registerText}>Nincs fiókja? Regisztráció</Text>
       </Pressable>
     </View>
   );
+};
+
+const styles = {
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    width: "90%",
+    padding: 20,
+    fontSize: 18,
+    borderRadius: 10,
+    marginVertical: 10,
+  },
+  button: {
+    backgroundColor: "blue",
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 10,
+    marginTop: 20,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  registerText: {
+    fontSize: 18,
+    color: "blue",
+    marginTop: 20,
+    textDecorationLine: "underline",
+  },
 };
 
 export default LoginScreen;

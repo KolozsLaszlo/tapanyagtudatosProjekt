@@ -1,25 +1,33 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Text, StyleSheet, Alert } from "react-native";
 import HomeScreen from "./HomeScreen";
-import ProfileScreen from "./ProfileScreen";
+import RecipesScreen from "./RecipesScreen";
 import SettingsScreen from "./SettingsScreen";
-import AboutScreen from "./AboutScreen";
 
-const MainScreen = ({ route, navigation }) => {
+const MainScreen = ({ navigation, route }) => {
   const { user } = route.params;
   const [activeScreen, setActiveScreen] = useState("Home");
 
-  // Aktív képernyő alapján megjelenítendő komponens
+  const handleLogout = () => {
+    Alert.alert("Kijelentkezés", "Biztosan ki szeretnél jelentkezni?", [
+      { text: "Mégse", style: "cancel" },
+      {
+        text: "Igen",
+        onPress: () => navigation.replace("Login"),
+      },
+    ]);
+  };
+
   const renderScreen = () => {
     switch (activeScreen) {
       case "Home":
         return <HomeScreen user={user} />;
+      case "Recipes":
+        return <RecipesScreen navigation={navigation} />;
       case "Profile":
         return <ProfileScreen user={user} />;
       case "Settings":
         return <SettingsScreen />;
-      case "About":
-        return <AboutScreen />;
       default:
         return <HomeScreen user={user} />;
     }
@@ -40,22 +48,21 @@ const MainScreen = ({ route, navigation }) => {
               activeScreen === "Home" ? styles.activeText : styles.inactiveText
             }
           >
-            🏠 Home
+            Home
           </Text>
         </TouchableOpacity>
-
         <TouchableOpacity
-          onPress={() => setActiveScreen("Profile")}
+          onPress={() => setActiveScreen("Recipes")}
           style={styles.navButton}
         >
           <Text
             style={
-              activeScreen === "Profile"
+              activeScreen === "Recipes"
                 ? styles.activeText
                 : styles.inactiveText
             }
           >
-            👤 Profile
+            Receptek
           </Text>
         </TouchableOpacity>
 
@@ -70,67 +77,61 @@ const MainScreen = ({ route, navigation }) => {
                 : styles.inactiveText
             }
           >
-            ⚙️ Settings
+            Beállítások
           </Text>
         </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => setActiveScreen("About")}
-          style={styles.navButton}
-        >
-          <Text
-            style={
-              activeScreen === "About" ? styles.activeText : styles.inactiveText
-            }
-          >
-            ℹ️ About
-          </Text>
-        </TouchableOpacity>
-
-        {/* Kijelentkezés gomb */}
-        <TouchableOpacity
-          onPress={() => navigation.replace("Login")}
-          style={styles.logoutButton}
-        >
-          <Text style={styles.logoutText}>🚪 Logout</Text>
+        <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+          <Text style={styles.logoutText}>Kijelentkezés</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-export default MainScreen;
-
-// Stílusok
 const styles = StyleSheet.create({
   bottomNav: {
     flexDirection: "row",
     justifyContent: "space-around",
+    alignItems: "center",
     position: "absolute",
     bottom: 0,
     width: "100%",
     backgroundColor: "#fff",
-    padding: 10,
+    height: 60,
     borderTopWidth: 1,
     borderTopColor: "#ccc",
   },
   navButton: {
-    padding: 10,
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
+    backgroundColor: "#f0f0f0",
   },
   activeText: {
     fontWeight: "bold",
     color: "blue",
+    fontSize: 16,
+    marginTop: 5,
   },
   inactiveText: {
     color: "gray",
+    fontSize: 16,
+    marginTop: 5,
   },
   logoutButton: {
-    padding: 10,
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
     backgroundColor: "red",
-    borderRadius: 5,
   },
   logoutText: {
     color: "white",
     fontWeight: "bold",
+    fontSize: 16,
+    marginTop: 5,
   },
 });
+
+export default MainScreen;
