@@ -7,7 +7,14 @@ import {
   Image,
   StyleSheet,
 } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"; // Importálás
 import recipesData from "../data/recipes.json";
+
+const images = {
+  "assets/food-images/rantotta.png": require("../assets/food-images/rantotta.png"),
+  "assets/food-images/zabkasa.jpg": require("../assets/food-images/zabkasa.jpg"),
+  "assets/food-images/csirkeporkolt.jpg": require("../assets/food-images/csirkeporkolt.jpg"),
+};
 
 const RecipeListScreen = ({ route, navigation }) => {
   const { category } = route.params;
@@ -18,34 +25,58 @@ const RecipeListScreen = ({ route, navigation }) => {
   }, [category]);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Receptek</Text>
-      <FlatList
-        data={recipes}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.container}>
+          <Text style={styles.title}>Receptek</Text>
+          <FlatList
+            data={recipes}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                style={styles.recipeCard}
+                onPress={() =>
+                  navigation.navigate("RecipeDetail", { recipe: item })
+                }
+              >
+                <Image source={images[item.image]} style={styles.recipeImage} />
+                <Text style={styles.recipeName}>{item.name}</Text>
+              </TouchableOpacity>
+            )}
+          />
+          {/* Vissza gomb lentebb helyezve */}
           <TouchableOpacity
-            style={styles.recipeCard}
-            onPress={() =>
-              navigation.navigate("RecipeDetail", { recipe: item })
-            }
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
           >
-            <Image source={{ uri: item.image }} style={styles.recipeImage} />
-            <Text style={styles.recipeName}>{item.name}</Text>
+            <Text style={styles.backButtonText}>{"<"}</Text>
           </TouchableOpacity>
-        )}
-      />
-    </View>
+        </View>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 
 export default RecipeListScreen;
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
   container: {
     flex: 1,
     alignItems: "center",
     padding: 10,
+  },
+  backButton: {
+    position: "absolute",
+    left: 20,
+    padding: 10,
+  },
+  backButtonText: {
+    fontSize: 24,
+    color: "#000",
   },
   title: {
     fontSize: 24,
