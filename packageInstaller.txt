@@ -7,3 +7,6 @@ npx expo install react-native-gesture-handler react-native-reanimated react-nati
 
 # SQLite telepítése
 npx expo install expo-sqlite
+
+# Picker/picker a CalculaatorScreen-hez
+npm install @react-native-picker/picker

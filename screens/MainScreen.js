@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, TouchableOpacity, Text, StyleSheet, Alert } from "react-native";
 import HomeScreen from "./HomeScreen";
 import RecipesScreen from "./RecipesScreen";
-import SettingsScreen from "./SettingsScreen";
+import CalculatorScreen from "./CalculatorScreen"; // A SettingsScreen-t átneveztük CalculatorScreen-re
 
 const MainScreen = ({ navigation, route }) => {
   const { user } = route.params;
@@ -26,8 +26,8 @@ const MainScreen = ({ navigation, route }) => {
         return <RecipesScreen navigation={navigation} />;
       case "Profile":
         return <ProfileScreen user={user} />;
-      case "Settings":
-        return <SettingsScreen />;
+      case "Calculator": // A CalculatorScreen-t itt használjuk
+        return <CalculatorScreen />;
       default:
         return <HomeScreen user={user} />;
     }
@@ -67,17 +67,17 @@ const MainScreen = ({ navigation, route }) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => setActiveScreen("Settings")}
+          onPress={() => setActiveScreen("Calculator")}
           style={styles.navButton}
         >
           <Text
             style={
-              activeScreen === "Settings"
+              activeScreen === "Calculator"
                 ? styles.activeText
                 : styles.inactiveText
             }
           >
-            Beállítások
+            Kalkulátor
           </Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>

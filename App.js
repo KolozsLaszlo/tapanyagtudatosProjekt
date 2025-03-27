@@ -5,7 +5,7 @@ import { SQLiteProvider } from "expo-sqlite";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import MainScreen from "./screens/MainScreen";
-import SettingsScreen from "./screens/SettingsScreen";
+import CalculatorScreen from "./screens/CalculatorScreen";
 import AboutScreen from "./screens/AboutScreen";
 import RecipeCategoriesScreen from "./screens/RecipesScreen";
 import RecipeListScreen from "./screens/RecipeListScreen";
@@ -40,7 +40,7 @@ export default function App() {
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen name="Main" component={MainScreen} />
-          <Stack.Screen name="Settings" component={SettingsScreen} />
+          <Stack.Screen name="Calculator" component={CalculatorScreen} />
           <Stack.Screen name="About" component={AboutScreen} />
           <Stack.Screen
             name="RecipeCategories"
