@@ -3,6 +3,7 @@ import { View, TouchableOpacity, Text, StyleSheet, Alert } from "react-native";
 import HomeScreen from "./HomeScreen";
 import RecipesScreen from "./RecipesScreen";
 import CalculatorScreen from "./CalculatorScreen"; // A SettingsScreen-t átneveztük CalculatorScreen-re
+import FavouritesScreen from "./FavouritesScreen"; // Import FavouritesScreen
 
 const MainScreen = ({ navigation, route }) => {
   const { user } = route.params;
@@ -28,6 +29,8 @@ const MainScreen = ({ navigation, route }) => {
         return <ProfileScreen user={user} />;
       case "Calculator": // A CalculatorScreen-t itt használjuk
         return <CalculatorScreen />;
+      case "Favourites": // Új eset a FavouritesScreen-hez
+        return <FavouritesScreen navigation={navigation} />;
       default:
         return <HomeScreen user={user} />;
     }
@@ -78,6 +81,20 @@ const MainScreen = ({ navigation, route }) => {
             }
           >
             Kalkulátor
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setActiveScreen("Favourites")} // Új gomb a Kedvencekhez
+          style={styles.navButton}
+        >
+          <Text
+            style={
+              activeScreen === "Favourites"
+                ? styles.activeText
+                : styles.inactiveText
+            }
+          >
+            Kedvencek
           </Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>

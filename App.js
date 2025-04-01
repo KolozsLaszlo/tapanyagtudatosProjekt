@@ -6,10 +6,11 @@ import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import MainScreen from "./screens/MainScreen";
 import CalculatorScreen from "./screens/CalculatorScreen";
-import AboutScreen from "./screens/AboutScreen";
+
 import RecipeCategoriesScreen from "./screens/RecipesScreen";
 import RecipeListScreen from "./screens/RecipeListScreen";
 import RecipeDetailsScreen from "./screens/RecipeDetailScreen";
+import FavouritesScreen from "./screens/FavouritesScreen"; // Import FavouritesScreen
 
 const Stack = createStackNavigator();
 
@@ -41,13 +42,13 @@ export default function App() {
           <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen name="Main" component={MainScreen} />
           <Stack.Screen name="Calculator" component={CalculatorScreen} />
-          <Stack.Screen name="About" component={AboutScreen} />
           <Stack.Screen
             name="RecipeCategories"
             component={RecipeCategoriesScreen}
           />
           <Stack.Screen name="RecipeList" component={RecipeListScreen} />
           <Stack.Screen name="RecipeDetail" component={RecipeDetailsScreen} />
+          <Stack.Screen name="Favourites" component={FavouritesScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </SQLiteProvider>
