@@ -10,7 +10,7 @@ import CalculatorScreen from "./screens/CalculatorScreen";
 import RecipeCategoriesScreen from "./screens/RecipesScreen";
 import RecipeListScreen from "./screens/RecipeListScreen";
 import RecipeDetailsScreen from "./screens/RecipeDetailScreen";
-import FavouritesScreen from "./screens/FavouritesScreen"; // Import FavouritesScreen
+import FavouritesScreen from "./screens/FavouritesScreen";
 
 const Stack = createStackNavigator();
 

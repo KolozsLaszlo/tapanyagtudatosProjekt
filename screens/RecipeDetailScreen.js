@@ -21,13 +21,19 @@ const RecipeDetailScreen = ({ route, navigation }) => {
 
   const addToFavorites = async () => {
     try {
-      const existingFavorites = await AsyncStorage.getItem("favorites");
-      console.log("Létező kedvencek:", existingFavorites);
+      const userId = await AsyncStorage.getItem("currentUserId");
+      if (!userId) {
+        Alert.alert("Hiba", "Felhasználói azonosító nem található.");
+        return;
+      }
+
+      const key = `favorites_${userId}`;
+      const existingFavorites = await AsyncStorage.getItem(key);
       let favorites = existingFavorites ? JSON.parse(existingFavorites) : [];
 
       if (!favorites.some((fav) => fav.id === recipe.id)) {
         favorites.push(recipe);
-        await AsyncStorage.setItem("favorites", JSON.stringify(favorites));
+        await AsyncStorage.setItem(key, JSON.stringify(favorites));
         Alert.alert("Siker!", "A recept hozzáadva a kedvencekhez.");
       } else {
         Alert.alert(

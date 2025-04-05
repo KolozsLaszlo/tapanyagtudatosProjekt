@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { View, TouchableOpacity, Text, StyleSheet, Alert } from "react-native";
 import HomeScreen from "./HomeScreen";
 import RecipesScreen from "./RecipesScreen";
-import CalculatorScreen from "./CalculatorScreen"; // A SettingsScreen-t átneveztük CalculatorScreen-re
-import FavouritesScreen from "./FavouritesScreen"; // Import FavouritesScreen
+import CalculatorScreen from "./CalculatorScreen";
+import FavouritesScreen from "./FavouritesScreen";
 
 const MainScreen = ({ navigation, route }) => {
   const { user } = route.params;
@@ -27,9 +27,9 @@ const MainScreen = ({ navigation, route }) => {
         return <RecipesScreen navigation={navigation} />;
       case "Profile":
         return <ProfileScreen user={user} />;
-      case "Calculator": // A CalculatorScreen-t itt használjuk
+      case "Calculator":
         return <CalculatorScreen />;
-      case "Favourites": // Új eset a FavouritesScreen-hez
+      case "Favourites":
         return <FavouritesScreen navigation={navigation} />;
       default:
         return <HomeScreen user={user} />;
@@ -40,7 +40,6 @@ const MainScreen = ({ navigation, route }) => {
     <View style={{ flex: 1 }}>
       {renderScreen()}
 
-      {/* Alsó navigációs sáv */}
       <View style={styles.bottomNav}>
         <TouchableOpacity
           onPress={() => setActiveScreen("Home")}
@@ -84,7 +83,7 @@ const MainScreen = ({ navigation, route }) => {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => setActiveScreen("Favourites")} // Új gomb a Kedvencekhez
+          onPress={() => setActiveScreen("Favourites")}
           style={styles.navButton}
         >
           <Text

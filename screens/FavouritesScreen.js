@@ -23,9 +23,18 @@ const FavouritesScreen = ({ navigation }) => {
   useEffect(() => {
     const loadFavourites = async () => {
       try {
-        const storedFavourites = await AsyncStorage.getItem("favorites");
+        const userId = await AsyncStorage.getItem("currentUserId");
+        if (!userId) {
+          Alert.alert("Hiba", "Felhasználói azonosító nem található.");
+          return;
+        }
+
+        const key = `favorites_${userId}`;
+        const storedFavourites = await AsyncStorage.getItem(key);
         if (storedFavourites) {
           setFavourites(JSON.parse(storedFavourites));
+        } else {
+          setFavourites([]);
         }
       } catch (error) {
         console.error("Hiba a kedvencek betöltésekor:", error);

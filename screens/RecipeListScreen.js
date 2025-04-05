@@ -7,7 +7,7 @@ import {
   Image,
   StyleSheet,
 } from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"; // Importálás
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import recipesData from "../data/recipes.json";
 
 const images = {
@@ -44,7 +44,6 @@ const RecipeListScreen = ({ route, navigation }) => {
               </TouchableOpacity>
             )}
           />
-          {/* Vissza gomb lentebb helyezve */}
           <TouchableOpacity
             style={styles.backButton}
             onPress={() => navigation.goBack()}

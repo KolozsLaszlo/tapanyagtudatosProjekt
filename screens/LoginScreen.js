@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Pressable, Alert } from "react-native";
 import { useSQLiteContext } from "expo-sqlite";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = ({ navigation }) => {
   const db = useSQLiteContext();
@@ -21,6 +22,8 @@ const LoginScreen = ({ navigation }) => {
         [userName, password]
       );
       if (user) {
+        await AsyncStorage.setItem("currentUserId", userName);
+
         Alert.alert("Siker", "Sikeres bejelentkezés");
         navigation.replace("Main", { user: userName });
       } else {
