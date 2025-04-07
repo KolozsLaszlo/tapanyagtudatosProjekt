@@ -45,6 +45,27 @@ const FavouritesScreen = ({ navigation }) => {
     loadFavourites();
   }, []);
 
+  // Recept eltávolítása a kedvencek közül
+  const removeFavourite = async (recipeId) => {
+    try {
+      const userId = await AsyncStorage.getItem("currentUserId");
+      if (!userId) {
+        Alert.alert("Hiba", "Felhasználói azonosító nem található.");
+        return;
+      }
+
+      const key = `favorites_${userId}`;
+      const updatedFavourites = favourites.filter(
+        (item) => item.id !== recipeId
+      );
+      setFavourites(updatedFavourites);
+      await AsyncStorage.setItem(key, JSON.stringify(updatedFavourites));
+    } catch (error) {
+      console.error("Hiba a recept eltávolításakor:", error);
+      Alert.alert("Hiba", "Nem sikerült eltávolítani a receptet.");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Kedvenc Receptek</Text>
@@ -53,15 +74,22 @@ const FavouritesScreen = ({ navigation }) => {
           data={favourites}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.recipeCard}
-              onPress={() =>
-                navigation.navigate("RecipeDetail", { recipe: item })
-              }
-            >
-              <Image source={images[item.image]} style={styles.recipeImage} />
-              <Text style={styles.recipeName}>{item.name}</Text>
-            </TouchableOpacity>
+            <View style={styles.recipeCard}>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("RecipeDetail", { recipe: item })
+                }
+              >
+                <Image source={images[item.image]} style={styles.recipeImage} />
+                <Text style={styles.recipeName}>{item.name}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.removeButton}
+                onPress={() => removeFavourite(item.id)}
+              >
+                <Text style={styles.removeButtonText}>Eltávolítás</Text>
+              </TouchableOpacity>
+            </View>
           )}
         />
       ) : (
@@ -101,6 +129,16 @@ const styles = StyleSheet.create({
   recipeName: {
     marginTop: 10,
     fontSize: 18,
+  },
+  removeButton: {
+    marginTop: 10,
+    padding: 5,
+    backgroundColor: "#ff4d4d",
+    borderRadius: 5,
+  },
+  removeButtonText: {
+    color: "#fff",
+    fontSize: 14,
   },
   noFavouritesText: {
     fontSize: 16,

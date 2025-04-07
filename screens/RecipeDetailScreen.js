@@ -18,6 +18,31 @@ const images = {
 
 const RecipeDetailScreen = ({ route, navigation }) => {
   const { recipe } = route.params;
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    const checkIfFavorite = async () => {
+      try {
+        const userId = await AsyncStorage.getItem("currentUserId");
+        if (!userId) {
+          Alert.alert("Hiba", "Felhasználói azonosító nem található.");
+          return;
+        }
+
+        const key = `favorites_${userId}`;
+        const existingFavorites = await AsyncStorage.getItem(key);
+        const favorites = existingFavorites
+          ? JSON.parse(existingFavorites)
+          : [];
+
+        setIsFavorite(favorites.some((fav) => fav.id === recipe.id));
+      } catch (error) {
+        console.error("Hiba a kedvencek ellenőrzése közben:", error);
+      }
+    };
+
+    checkIfFavorite();
+  }, [recipe]);
 
   const addToFavorites = async () => {
     try {
@@ -34,15 +59,32 @@ const RecipeDetailScreen = ({ route, navigation }) => {
       if (!favorites.some((fav) => fav.id === recipe.id)) {
         favorites.push(recipe);
         await AsyncStorage.setItem(key, JSON.stringify(favorites));
+        setIsFavorite(true);
         Alert.alert("Siker!", "A recept hozzáadva a kedvencekhez.");
-      } else {
-        Alert.alert(
-          "Figyelmeztetés",
-          "Ez a recept már szerepel a kedvencek között."
-        );
       }
     } catch (error) {
       console.error("Hiba a kedvencek mentése közben:", error);
+    }
+  };
+
+  const removeFromFavorites = async () => {
+    try {
+      const userId = await AsyncStorage.getItem("currentUserId");
+      if (!userId) {
+        Alert.alert("Hiba", "Felhasználói azonosító nem található.");
+        return;
+      }
+
+      const key = `favorites_${userId}`;
+      const existingFavorites = await AsyncStorage.getItem(key);
+      let favorites = existingFavorites ? JSON.parse(existingFavorites) : [];
+
+      favorites = favorites.filter((fav) => fav.id !== recipe.id);
+      await AsyncStorage.setItem(key, JSON.stringify(favorites));
+      setIsFavorite(false);
+      Alert.alert("Siker!", "A recept eltávolítva a kedvencek közül.");
+    } catch (error) {
+      console.error("Hiba a kedvencek eltávolítása közben:", error);
     }
   };
 
@@ -69,9 +111,16 @@ const RecipeDetailScreen = ({ route, navigation }) => {
         <Text style={styles.text}>{recipe.instructions}</Text>
       </View>
 
-      {/* Hozzáadás a kedvencekhez gomb */}
-      <TouchableOpacity style={styles.favoriteButton} onPress={addToFavorites}>
-        <Text style={styles.favoriteButtonText}>Hozzáadás a kedvencekhez</Text>
+      {/* Dinamikus gomb a kedvencekhez adáshoz vagy eltávolításhoz */}
+      <TouchableOpacity
+        style={styles.favoriteButton}
+        onPress={isFavorite ? removeFromFavorites : addToFavorites}
+      >
+        <Text style={styles.favoriteButtonText}>
+          {isFavorite
+            ? "Eltávolítás a kedvencekből"
+            : "Hozzáadás a kedvencekhez"}
+        </Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
