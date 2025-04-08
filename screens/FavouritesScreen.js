@@ -9,12 +9,7 @@ import {
   Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-const images = {
-  "assets/food-images/rantotta.png": require("../assets/food-images/rantotta.png"),
-  "assets/food-images/zabkasa.jpg": require("../assets/food-images/zabkasa.jpg"),
-  "assets/food-images/csirkeporkolt.jpg": require("../assets/food-images/csirkeporkolt.jpg"),
-};
+import images from "../utils/imageLoader"; // Importáljuk a képeket
 
 const FavouritesScreen = ({ navigation }) => {
   const [favourites, setFavourites] = useState([]);

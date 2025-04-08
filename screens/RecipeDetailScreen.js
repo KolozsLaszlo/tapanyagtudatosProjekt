@@ -9,12 +9,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-const images = {
-  "assets/food-images/rantotta.png": require("../assets/food-images/rantotta.png"),
-  "assets/food-images/zabkasa.jpg": require("../assets/food-images/zabkasa.jpg"),
-  "assets/food-images/csirkeporkolt.jpg": require("../assets/food-images/csirkeporkolt.jpg"),
-};
+import images from "../utils/imageLoader"; // Importáljuk a képeket
 
 const RecipeDetailScreen = ({ route, navigation }) => {
   const { recipe } = route.params;
@@ -111,7 +106,6 @@ const RecipeDetailScreen = ({ route, navigation }) => {
         <Text style={styles.text}>{recipe.instructions}</Text>
       </View>
 
-      {/* Dinamikus gomb a kedvencekhez adáshoz vagy eltávolításhoz */}
       <TouchableOpacity
         style={styles.favoriteButton}
         onPress={isFavorite ? removeFromFavorites : addToFavorites}

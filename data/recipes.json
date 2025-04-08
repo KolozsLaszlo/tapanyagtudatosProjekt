@@ -11,20 +11,426 @@
     {
       "id": 2,
       "name": "Zabkása",
-      "image": "assets/food-images/zabkasa.jpg",
+      "image": "assets/food-images/zabkasa.png",
       "ingredients": ["Zabpehely", "Tej", "Méz", "Gyümölcs"],
       "prep_time": "5 perc",
       "instructions": "Forrald fel a tejet, add hozzá a zabpelyhet, és főzd pár percig."
+    },
+    {
+      "id": 3,
+      "name": "Gyümölcsös joghurt",
+      "image": "assets/food-images/gyumolcsos-joghurt.png",
+      "ingredients": ["Natúr joghurt", "Banán", "Eper", "Méz", "Müzli"],
+      "prep_time": "5 perc",
+      "instructions": "Keverd össze a joghurtot a felvágott gyümölcsökkel és szórd meg müzlivel."
+    },
+    {
+      "id": 4,
+      "name": "Sajtos melegszendvics",
+      "image": "assets/food-images/sajtos-melegszendvics.png",
+      "ingredients": ["Kenyér", "Sajt", "Vaj", "Sonka"],
+      "prep_time": "10 perc",
+      "instructions": "Kend meg a kenyeret vajjal, tegyél rá sonkát és sajtot, majd süsd meg sütőben vagy szendvicssütőben."
+    },
+    {
+      "id": 5,
+      "name": "Tükörtojás",
+      "image": "assets/food-images/tukortojas.png",
+      "ingredients": ["Tojás", "Olaj", "Só", "Bors"],
+      "prep_time": "5 perc",
+      "instructions": "Melegítsd fel az olajat, üsd bele a tojást, és süsd ízlés szerint."
+    },
+    {
+      "id": 6,
+      "name": "Palacsinta",
+      "image": "assets/food-images/palacsinta.png",
+      "ingredients": ["Liszt", "Tojás", "Tej", "Cukor", "Olaj"],
+      "prep_time": "20 perc",
+      "instructions": "Keverd össze az alapanyagokat, süsd ki a palacsintákat serpenyőben."
+    },
+    {
+      "id": 7,
+      "name": "Croissant lekvárral",
+      "image": "assets/food-images/croissant-lekvarral.png",
+      "ingredients": ["Croissant", "Lekvár", "Porcukor"],
+      "prep_time": "2 perc",
+      "instructions": "Vágd félbe a croissant-t, kend meg lekvárral, szórd meg porcukorral."
+    },
+    {
+      "id": 8,
+      "name": "Banános smoothie",
+      "image": "assets/food-images/bananos-smoothie.png",
+      "ingredients": ["Banán", "Tej", "Méz", "Joghurt"],
+      "prep_time": "5 perc",
+      "instructions": "Turmixold össze az alapanyagokat, és azonnal fogyaszd."
+    },
+    {
+      "id": 9,
+      "name": "Tojásos szendvics",
+      "image": "assets/food-images/tojasos-szendvics.png",
+      "ingredients": ["Kenyér", "Főtt tojás", "Majonéz", "Só", "Bors"],
+      "prep_time": "10 perc",
+      "instructions": "Szeleteld fel a főtt tojást, keverd majonézzel, fűszerezd, majd kend a kenyérre."
+    },
+    {
+      "id": 10,
+      "name": "Kukoricás omlett",
+      "image": "assets/food-images/kukoricas-omlett.png",
+      "ingredients": ["Tojás", "Kukorica", "Sajt", "Só", "Olaj"],
+      "prep_time": "10 perc",
+      "instructions": "Verd fel a tojásokat, add hozzá a kukoricát és sajtot, majd süsd meg serpenyőben."
     }
   ],
   "lunch": [
     {
-      "id": 3,
+      "id": 11,
       "name": "Csirkepörkölt",
-      "image": "assets/food-images/csirkeporkolt.jpg",
+      "image": "assets/food-images/csirkeporkolt.png",
       "ingredients": ["Csirke", "Hagyma", "Paprika", "Paradicsom"],
       "prep_time": "45 perc",
       "instructions": "Pirítsd meg a hagymát, add hozzá a húst, és főzd puhára."
+    },
+    {
+      "id": 12,
+      "name": "Rakott krumpli",
+      "image": "assets/food-images/rakottkrumpli.png",
+      "ingredients": ["Krumpli", "Tojás", "Kolbász", "Tejföl", "Só"],
+      "prep_time": "60 perc",
+      "instructions": "Főzd meg a krumplit és a tojásokat, szeleteld fel, rétegezd, majd süsd meg."
+    },
+    {
+      "id": 13,
+      "name": "Zöldségleves",
+      "image": "assets/food-images/zoldsegleves.png",
+      "ingredients": ["Répa", "Zeller", "Karalábé", "Borsó", "Só", "Víz"],
+      "prep_time": "40 perc",
+      "instructions": "Aprítsd fel a zöldségeket, főzd meg sós vízben, amíg puhák lesznek."
+    },
+    {
+      "id": 14,
+      "name": "Sült csirke rizzsel",
+      "image": "assets/food-images/sultcsirke-rizzsel.png",
+      "ingredients": ["Csirkecomb", "Rizs", "Fokhagyma", "Fűszerek"],
+      "prep_time": "50 perc",
+      "instructions": "Fűszerezd a csirkét, süsd meg, főzd meg a rizst, és tálald együtt."
+    },
+    {
+      "id": 15,
+      "name": "Bolognai spagetti",
+      "image": "assets/food-images/bolognai-spagetti.png",
+      "ingredients": [
+        "Darálthús",
+        "Tészta",
+        "Paradicsomszósz",
+        "Hagyma",
+        "Fokhagyma"
+      ],
+      "prep_time": "35 perc",
+      "instructions": "Pirítsd meg a húst, add hozzá a szószt, főzd meg a tésztát, és keverd össze."
+    },
+    {
+      "id": 16,
+      "name": "Grillezett sajt salátával",
+      "image": "assets/food-images/grillezett-sajt-salataval.png",
+      "ingredients": [
+        "Grillezhető sajt",
+        "Saláta",
+        "Paradicsom",
+        "Uborka",
+        "Öntet"
+      ],
+      "prep_time": "20 perc",
+      "instructions": "Süsd meg a sajtot, tálald friss salátával és öntettel."
+    },
+    {
+      "id": 17,
+      "name": "Töltött paprika",
+      "image": "assets/food-images/toltott-paprika.png",
+      "ingredients": ["Paprika", "Darálthús", "Rizs", "Paradicsomszósz"],
+      "prep_time": "60 perc",
+      "instructions": "Töltsd meg a paprikát a húsos töltelékkel, főzd paradicsomszószban."
+    },
+    {
+      "id": 18,
+      "name": "Lencsefőzelék virslivel",
+      "image": "assets/food-images/lencsefozelek-virslivel.png",
+      "ingredients": ["Lencse", "Liszt", "Babérlevél", "Tejföl", "Virsli"],
+      "prep_time": "45 perc",
+      "instructions": "Főzd meg a lencsét, sűrítsd be, tálald főtt vagy sült virslivel."
+    },
+    {
+      "id": 19,
+      "name": "Párolt hal zöldségekkel",
+      "image": "assets/food-images/parolt-hal-zoldsegekkel.png",
+      "ingredients": ["Halfilé", "Sárgarépa", "Brokkoli", "Citrom", "Só"],
+      "prep_time": "30 perc",
+      "instructions": "Párold meg a halat és a zöldségeket, locsold meg citrommal."
+    },
+    {
+      "id": 20,
+      "name": "Gombapaprikás galuskával",
+      "image": "assets/food-images/gombapaprikas-galuskaval.png",
+      "ingredients": ["Gomba", "Tejföl", "Hagyma", "Paprika", "Galuska"],
+      "prep_time": "40 perc",
+      "instructions": "Készíts paprikás alapot, főzd meg a gombát, tálald főtt galuskával."
+    }
+  ],
+  "dinner": [
+    {
+      "id": 21,
+      "name": "Lazacos tészta",
+      "image": "assets/food-images/lazacos-teszta.png",
+      "ingredients": [
+        "Lazac",
+        "Tejszín",
+        "Tészta",
+        "Fokhagyma",
+        "Petrezselyem"
+      ],
+      "prep_time": "30 perc",
+      "instructions": "Főzd meg a tésztát, süsd meg a lazacot, keverd össze a tejszínes szósszal."
+    },
+    {
+      "id": 22,
+      "name": "Spenótos rizottó",
+      "image": "assets/food-images/spenotos-rizotto.png",
+      "ingredients": ["Rizottó rizs", "Spenót", "Hagyma", "Parmezán", "Alaplé"],
+      "prep_time": "35 perc",
+      "instructions": "Pirítsd a hagymát, add hozzá a rizst, majd főzd fel apránként az alaplével, végül keverd bele a spenótot."
+    },
+    {
+      "id": 23,
+      "name": "Tojásos nokedli uborkasalátával",
+      "image": "assets/food-images/tojasos-nokedli.png",
+      "ingredients": ["Liszt", "Tojás", "Uborka", "Ecet", "Só"],
+      "prep_time": "25 perc",
+      "instructions": "Főzd ki a nokedlit, keverd el tojással, tálald uborkasalátával."
+    },
+    {
+      "id": 24,
+      "name": "Sült padlizsán paradicsomszósszal",
+      "image": "assets/food-images/sult-padlizsan.png",
+      "ingredients": ["Padlizsán", "Paradicsom", "Fokhagyma", "Bazsalikom"],
+      "prep_time": "40 perc",
+      "instructions": "Süsd meg a padlizsánszeleteket, öntsd le paradicsomszósszal, süsd össze röviden."
+    },
+    {
+      "id": 25,
+      "name": "Gnocchi sajtszósszal",
+      "image": "assets/food-images/gnocchi-sajtszosszal.png",
+      "ingredients": ["Gnocchi", "Sajt", "Tejszín", "Fokhagyma", "Bors"],
+      "prep_time": "20 perc",
+      "instructions": "Főzd ki a gnocchit, forgasd bele a tejszínes sajtszószba."
+    },
+    {
+      "id": 26,
+      "name": "Zöldséges kuszkusz",
+      "image": "assets/food-images/zoldseges-kuszkusz.png",
+      "ingredients": ["Kuszkusz", "Cukkini", "Paprika", "Répa", "Citrom"],
+      "prep_time": "20 perc",
+      "instructions": "Főzd meg a kuszkuszt, párold meg a zöldségeket, keverd össze és locsold meg citromlével."
+    },
+    {
+      "id": 27,
+      "name": "Sült kolbász burgonyapürével",
+      "image": "assets/food-images/sult-kolbasz-burgonyapure.png",
+      "ingredients": ["Kolbász", "Burgonya", "Vaj", "Tej", "Só"],
+      "prep_time": "30 perc",
+      "instructions": "Süsd meg a kolbászt, készíts burgonyapürét, és tálald együtt."
+    },
+    {
+      "id": 28,
+      "name": "Tonhalsaláta",
+      "image": "assets/food-images/tonhalsalata.png",
+      "ingredients": ["Tonhal", "Saláta", "Kukorica", "Paradicsom", "Öntet"],
+      "prep_time": "10 perc",
+      "instructions": "Keverd össze az alapanyagokat, locsold meg az öntettel, és már kész is."
+    },
+    {
+      "id": 29,
+      "name": "Karfiolos curry",
+      "image": "assets/food-images/karfiolos-curry.png",
+      "ingredients": ["Karfiol", "Kókusztej", "Currypor", "Hagyma", "Olaj"],
+      "prep_time": "35 perc",
+      "instructions": "Pirítsd meg a hagymát, add hozzá a karfiolt, fűszerezd, majd főzd kókusztejjel."
+    },
+    {
+      "id": 30,
+      "name": "Töltött cukkini",
+      "image": "assets/food-images/toltott-cukkini.png",
+      "ingredients": ["Cukkini", "Darálthús", "Rizs", "Sajt", "Fűszerek"],
+      "prep_time": "45 perc",
+      "instructions": "Töltsd meg a cukkinit a töltelékkel, szórd meg sajttal, és süsd meg."
+    }
+  ],
+  "snack": [
+    {
+      "id": 31,
+      "name": "Sajtos rúd",
+      "image": "assets/food-images/sajtos-rud.png",
+      "ingredients": ["Leveles tészta", "Sajt", "Tojás", "Só"],
+      "prep_time": "25 perc",
+      "instructions": "Vágd csíkokra a tésztát, szórd meg sajttal, kend le tojással, süsd meg."
+    },
+    {
+      "id": 32,
+      "name": "Zöldségchips",
+      "image": "assets/food-images/zoldsegchips.png",
+      "ingredients": ["Cékla", "Répa", "Olaj", "Só"],
+      "prep_time": "30 perc",
+      "instructions": "Szeleteld vékonyra a zöldségeket, süsd ropogósra sütőben."
+    },
+    {
+      "id": 33,
+      "name": "Mini szendvicsek",
+      "image": "assets/food-images/mini-szendvicsek.png",
+      "ingredients": ["Kenyér", "Sonka", "Sajt", "Uborka"],
+      "prep_time": "10 perc",
+      "instructions": "Készíts kis szendvicseket tetszőleges feltétekkel."
+    },
+    {
+      "id": 34,
+      "name": "Gyümölcsnyárs",
+      "image": "assets/food-images/gyumolcsnyars.png",
+      "ingredients": ["Eper", "Banán", "Szőlő", "Ananász"],
+      "prep_time": "10 perc",
+      "instructions": "Fűzd fel a gyümölcsöket nyársra, tálald frissen."
+    },
+    {
+      "id": 35,
+      "name": "Házi popcorn",
+      "image": "assets/food-images/hazi-popcorn.png",
+      "ingredients": ["Kukorica", "Olaj", "Só", "Vaj"],
+      "prep_time": "5 perc",
+      "instructions": "Pattogtasd ki a kukoricát, ízesítsd sóval vagy vajjal."
+    },
+    {
+      "id": 36,
+      "name": "Kétszersült hummusszal",
+      "image": "assets/food-images/ketszersult-hummusszal.png",
+      "ingredients": ["Kétszersült", "Hummusz", "Olívaolaj", "Fűszerek"],
+      "prep_time": "5 perc",
+      "instructions": "Kend meg a kétszersültet hummusszal, locsold meg olívaolajjal."
+    },
+    {
+      "id": 37,
+      "name": "Sajtkrémes keksz",
+      "image": "assets/food-images/sajtkremes-keksz.png",
+      "ingredients": ["Keksz", "Sajtkrém", "Fűszerek"],
+      "prep_time": "5 perc",
+      "instructions": "Kenj sajtkrémet a sós kekszekre, szórd meg fűszerekkel."
+    },
+    {
+      "id": 38,
+      "name": "Avokádókrém pirítóssal",
+      "image": "assets/food-images/avokadokrem-piritossal.png",
+      "ingredients": ["Avokádó", "Citrom", "Só", "Bors", "Pirítós"],
+      "prep_time": "10 perc",
+      "instructions": "Törd össze az avokádót, ízesítsd, majd kend a pirítósra."
+    },
+    {
+      "id": 39,
+      "name": "Mozzarella golyók",
+      "image": "assets/food-images/mozzarella-golyok.png",
+      "ingredients": ["Mozzarella", "Bazsalikom", "Paradicsom", "Olívaolaj"],
+      "prep_time": "10 perc",
+      "instructions": "Tűzz össze golyókat fogpiszkálóra paradicsommal és bazsalikommal."
+    },
+    {
+      "id": 40,
+      "name": "Kukoricás muffin",
+      "image": "assets/food-images/kukoricas-muffin.png",
+      "ingredients": ["Kukorica", "Liszt", "Tojás", "Tej", "Sütőpor"],
+      "prep_time": "25 perc",
+      "instructions": "Keverd össze a hozzávalókat, adagold muffinformákba, és süsd meg."
+    }
+  ],
+  "dessert": [
+    {
+      "id": 41,
+      "name": "Csokis muffin",
+      "image": "assets/food-images/csokis-muffin.png",
+      "ingredients": ["Liszt", "Kakaópor", "Tojás", "Cukor", "Tej"],
+      "prep_time": "30 perc",
+      "instructions": "Keverd össze a hozzávalókat, adagold formákba, és süsd 180 fokon 20 percig."
+    },
+    {
+      "id": 42,
+      "name": "Gyümölcsös pohárkrém",
+      "image": "assets/food-images/gyumolcsos-poharkrem.png",
+      "ingredients": ["Tejszín", "Gyümölcs", "Cukor", "Keksz"],
+      "prep_time": "15 perc",
+      "instructions": "Rétegezd a hozzávalókat pohárba, majd hűtsd le."
+    },
+    {
+      "id": 43,
+      "name": "Túrógombóc",
+      "image": "assets/food-images/turogomboc.png",
+      "ingredients": ["Túró", "Gríz", "Tojás", "Zsemlemorzsa", "Cukor"],
+      "prep_time": "40 perc",
+      "instructions": "Keverd össze az alapokat, főzd meg, majd forgasd pirított zsemlemorzsába."
+    },
+    {
+      "id": 44,
+      "name": "Almás rétes",
+      "image": "assets/food-images/almas-retes.png",
+      "ingredients": [
+        "Leveles tészta",
+        "Alma",
+        "Fahéj",
+        "Cukor",
+        "Zsemlemorzsa"
+      ],
+      "prep_time": "45 perc",
+      "instructions": "Töltsd meg a tésztát a töltelékkel, süsd aranybarnára."
+    },
+    {
+      "id": 45,
+      "name": "Banánfagyi",
+      "image": "assets/food-images/bananfagyi.png",
+      "ingredients": ["Banán", "Tej", "Méz"],
+      "prep_time": "5 perc (+fagyasztás)",
+      "instructions": "Fagyaszd le a banánokat, turmixold össze a többi hozzávalóval."
+    },
+    {
+      "id": 46,
+      "name": "Kakaós palacsinta",
+      "image": "assets/food-images/kakaos-palacsinta.png",
+      "ingredients": ["Liszt", "Tojás", "Tej", "Kakaó", "Cukor"],
+      "prep_time": "25 perc",
+      "instructions": "Süsd ki a palacsintákat, töltsd meg kakaóval és tekerd fel."
+    },
+    {
+      "id": 47,
+      "name": "Tiramisu pohárban",
+      "image": "assets/food-images/tiramisu-poharban.png",
+      "ingredients": ["Mascarpone", "Kávé", "Babapiskóta", "Cukor", "Kakaópor"],
+      "prep_time": "20 perc",
+      "instructions": "Rétegezd a hozzávalókat pohárba, majd tedd hűtőbe pár órára."
+    },
+    {
+      "id": 48,
+      "name": "Mézes puszedli",
+      "image": "assets/food-images/mezes-puszedli.png",
+      "ingredients": ["Méz", "Liszt", "Tojás", "Fűszerek", "Cukormáz"],
+      "prep_time": "60 perc",
+      "instructions": "Gyúrd be a tésztát, formázd, süsd meg, majd díszítsd cukormázzal."
+    },
+    {
+      "id": 49,
+      "name": "Piskótatekercs lekvárral",
+      "image": "assets/food-images/piskotatekercs-lekvarral.png",
+      "ingredients": ["Liszt", "Tojás", "Cukor", "Lekvár"],
+      "prep_time": "35 perc",
+      "instructions": "Süsd meg a piskótát, kend meg lekvárral, és tekerd fel."
+    },
+    {
+      "id": 50,
+      "name": "Csokifondü gyümölccsel",
+      "image": "assets/food-images/csokifondu.png",
+      "ingredients": ["Étcsoki", "Tejszín", "Gyümölcs"],
+      "prep_time": "10 perc",
+      "instructions": "Olvaszd meg a csokit tejszínnel, és mártogasd bele a gyümölcsöket."
     }
   ]
 }

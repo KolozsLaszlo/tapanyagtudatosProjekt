@@ -9,12 +9,7 @@ import {
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import recipesData from "../data/recipes.json";
-
-const images = {
-  "assets/food-images/rantotta.png": require("../assets/food-images/rantotta.png"),
-  "assets/food-images/zabkasa.jpg": require("../assets/food-images/zabkasa.jpg"),
-  "assets/food-images/csirkeporkolt.jpg": require("../assets/food-images/csirkeporkolt.jpg"),
-};
+import images from "../utils/imageLoader"; // Importáljuk a képeket
 
 const RecipeListScreen = ({ route, navigation }) => {
   const { category } = route.params;
