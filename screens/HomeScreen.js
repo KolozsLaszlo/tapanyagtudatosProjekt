@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },
   tipCard: {
     position: "absolute",
-    bottom: 70, // itt hagyjuk meg a te beállításod szerint
+    bottom: 30, // itt hagyjuk meg a te beállításod szerint
     left: 20,
     right: 20,
     backgroundColor: "#F1F3F5",

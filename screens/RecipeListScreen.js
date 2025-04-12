@@ -10,6 +10,7 @@ import {
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import recipesData from "../data/recipes.json";
 import images from "../utils/imageLoader"; // Importáljuk a képeket
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const RecipeListScreen = ({ route, navigation }) => {
   const { category } = route.params;
@@ -35,7 +36,23 @@ const RecipeListScreen = ({ route, navigation }) => {
                 }
               >
                 <Image source={images[item.image]} style={styles.recipeImage} />
-                <Text style={styles.recipeName}>{item.name}</Text>
+                <View style={styles.recipeContent}>
+                  <Text style={styles.recipeName}>{item.name}</Text>
+
+                  <View style={styles.prepRow}>
+                    <Icon
+                      name="clock-outline"
+                      size={16}
+                      color="#666"
+                      style={{ marginRight: 4 }}
+                    />
+                    <Text style={styles.prepTime}>{item.prep_time}</Text>
+                  </View>
+
+                  <Text style={styles.ingredients}>
+                    Hozzávalók: {item.ingredients.slice(0, 3).join(", ")}...
+                  </Text>
+                </View>
               </TouchableOpacity>
             )}
           />
@@ -43,7 +60,7 @@ const RecipeListScreen = ({ route, navigation }) => {
             style={styles.backButton}
             onPress={() => navigation.goBack()}
           >
-            <Text style={styles.backButtonText}>{"<"}</Text>
+            <Icon name="arrow-left" size={22} color="#333" />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -60,38 +77,71 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    alignItems: "center",
     padding: 10,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    alignSelf: "center",
+    marginBottom: 20,
   },
   backButton: {
     position: "absolute",
-    left: 20,
-    padding: 10,
+    top: 12,
+    left: 12,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(0,0,0,0.05)",
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
   },
   backButtonText: {
     fontSize: 24,
     color: "#000",
   },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-  },
   recipeCard: {
-    width: "90%",
-    padding: 10,
-    backgroundColor: "#fff",
-    marginVertical: 5,
-    borderRadius: 10,
+    flexDirection: "row",
+    backgroundColor: "#f9f9f9",
+    borderRadius: 12,
+    padding: 12,
+    marginVertical: 6,
+    marginHorizontal: 10,
     alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   recipeImage: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
     borderRadius: 10,
+    marginRight: 12,
+  },
+  recipeContent: {
+    flex: 1,
   },
   recipeName: {
-    marginTop: 10,
     fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 4,
+    color: "#333",
+  },
+  prepTime: {
+    fontSize: 14,
+    color: "#666",
+    marginBottom: 2,
+  },
+  ingredients: {
+    fontSize: 13,
+    color: "#555",
+  },
+  prepRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 2,
   },
 });
