@@ -1,12 +1,22 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Pressable, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
 import { useSQLiteContext } from "expo-sqlite";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const RegisterScreen = ({ navigation }) => {
   const db = useSQLiteContext();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleRegister = async () => {
     if (!userName || !password || !confirmPassword) {
@@ -46,20 +56,46 @@ const RegisterScreen = ({ navigation }) => {
         value={userName}
         onChangeText={setUserName}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Jelszó"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Jelszó megerősítése"
-        secureTextEntry
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-      />
+      <View style={styles.passwordWrapper}>
+        <TextInput
+          style={styles.inputWithIcon}
+          placeholder="Jelszó"
+          secureTextEntry={!showPassword}
+          value={password}
+          onChangeText={setPassword}
+        />
+        <TouchableOpacity
+          onPress={() => setShowPassword(!showPassword)}
+          style={styles.eyeIcon}
+        >
+          <MaterialCommunityIcons
+            name={showPassword ? "eye" : "eye-off"}
+            size={24}
+            color="#888"
+          />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.passwordWrapper}>
+        <TextInput
+          style={styles.inputWithIcon}
+          placeholder="Jelszó megerősítése"
+          secureTextEntry={!showConfirmPassword}
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+        />
+        <TouchableOpacity
+          onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+          style={styles.eyeIcon}
+        >
+          <MaterialCommunityIcons
+            name={showConfirmPassword ? "eye" : "eye-off"}
+            size={24}
+            color="#888"
+          />
+        </TouchableOpacity>
+      </View>
+
       <Pressable onPress={handleRegister} style={styles.button}>
         <Text style={styles.buttonText}>Regisztráció</Text>
       </Pressable>
@@ -91,6 +127,25 @@ const styles = {
     borderRadius: 10,
     marginVertical: 10,
   },
+  passwordWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "90%",
+    marginVertical: 10,
+  },
+  inputWithIcon: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 15,
+    fontSize: 18,
+    borderRadius: 10,
+  },
+  eyeIcon: {
+    position: "absolute",
+    right: 10,
+    padding: 10,
+  },
   button: {
     backgroundColor: "blue",
     paddingVertical: 15,
@@ -108,6 +163,7 @@ const styles = {
     color: "blue",
     marginTop: 20,
     textDecorationLine: "underline",
+    textAlign: "center",
   },
 };
 

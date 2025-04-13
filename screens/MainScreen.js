@@ -4,7 +4,7 @@ import HomeScreen from "./HomeScreen";
 import RecipesScreen from "./RecipesScreen";
 import CalculatorScreen from "./CalculatorScreen";
 import FavouritesScreen from "./FavouritesScreen";
-import Icon from "react-native-vector-icons/MaterialIcons"; // vagy Ionicons / FontAwesome is lehet
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 const MainScreen = ({ navigation, route }) => {
   const { user } = route.params;
@@ -156,19 +156,23 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    minWidth: 75,
+    paddingHorizontal: 8,
   },
 
   activeLabel: {
-    fontSize: 12,
+    fontSize: 10,
     color: "#1e90ff",
     fontWeight: "600",
     marginTop: 4,
+    textAlign: "center",
   },
 
   inactiveLabel: {
-    fontSize: 12,
+    fontSize: 10,
     color: "#8e8e8e",
     marginTop: 4,
+    textAlign: "center",
   },
 
   logoutLabel: {
@@ -188,7 +192,7 @@ const styles = StyleSheet.create({
   screenWrapper: {
     flex: 1,
     paddingHorizontal: 16,
-    paddingBottom: 80, // hogy ne takarja ki a bottom nav
+    paddingBottom: 80,
   },
 
   card: {

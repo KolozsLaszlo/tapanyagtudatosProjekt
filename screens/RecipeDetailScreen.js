@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   View,
   Text,
@@ -6,30 +6,29 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
+  ScrollView,
+  Animated,
+  Easing,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import images from "../utils/imageLoader"; // Importáljuk a képeket
+import images from "../utils/imageLoader";
+import Icon from "react-native-vector-icons/Ionicons";
 
 const RecipeDetailScreen = ({ route, navigation }) => {
   const { recipe } = route.params;
   const [isFavorite, setIsFavorite] = useState(false);
+  const animation = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     const checkIfFavorite = async () => {
       try {
         const userId = await AsyncStorage.getItem("currentUserId");
-        if (!userId) {
-          Alert.alert("Hiba", "Felhasználói azonosító nem található.");
-          return;
-        }
-
         const key = `favorites_${userId}`;
         const existingFavorites = await AsyncStorage.getItem(key);
         const favorites = existingFavorites
           ? JSON.parse(existingFavorites)
           : [];
-
         setIsFavorite(favorites.some((fav) => fav.id === recipe.id));
       } catch (error) {
         console.error("Hiba a kedvencek ellenőrzése közben:", error);
@@ -39,83 +38,113 @@ const RecipeDetailScreen = ({ route, navigation }) => {
     checkIfFavorite();
   }, [recipe]);
 
-  const addToFavorites = async () => {
+  const triggerAnimation = () => {
+    animation.setValue(0);
+    Animated.timing(animation, {
+      toValue: 1,
+      duration: 600,
+      easing: Easing.out(Easing.ease),
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const toggleFavorite = async () => {
     try {
       const userId = await AsyncStorage.getItem("currentUserId");
-      if (!userId) {
-        Alert.alert("Hiba", "Felhasználói azonosító nem található.");
-        return;
-      }
-
       const key = `favorites_${userId}`;
       const existingFavorites = await AsyncStorage.getItem(key);
       let favorites = existingFavorites ? JSON.parse(existingFavorites) : [];
 
-      if (!favorites.some((fav) => fav.id === recipe.id)) {
+      if (isFavorite) {
+        favorites = favorites.filter((fav) => fav.id !== recipe.id);
+        setIsFavorite(false);
+      } else {
         favorites.push(recipe);
-        await AsyncStorage.setItem(key, JSON.stringify(favorites));
         setIsFavorite(true);
-        Alert.alert("Siker!", "A recept hozzáadva a kedvencekhez.");
-      }
-    } catch (error) {
-      console.error("Hiba a kedvencek mentése közben:", error);
-    }
-  };
-
-  const removeFromFavorites = async () => {
-    try {
-      const userId = await AsyncStorage.getItem("currentUserId");
-      if (!userId) {
-        Alert.alert("Hiba", "Felhasználói azonosító nem található.");
-        return;
       }
 
-      const key = `favorites_${userId}`;
-      const existingFavorites = await AsyncStorage.getItem(key);
-      let favorites = existingFavorites ? JSON.parse(existingFavorites) : [];
-
-      favorites = favorites.filter((fav) => fav.id !== recipe.id);
       await AsyncStorage.setItem(key, JSON.stringify(favorites));
-      setIsFavorite(false);
-      Alert.alert("Siker!", "A recept eltávolítva a kedvencek közül.");
+      triggerAnimation();
     } catch (error) {
-      console.error("Hiba a kedvencek eltávolítása közben:", error);
+      console.error("Hiba a kedvenc váltásnál:", error);
     }
   };
+
+  const spin = animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["0deg", "360deg"],
+  });
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
+      <View style={styles.headerRow}>
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => navigation.goBack()}
         >
-          <Text style={styles.backButtonText}>{"<"}</Text>
+          <Icon name="arrow-back" size={24} color="#333" />
         </TouchableOpacity>
-
-        <Image source={images[recipe.image]} style={styles.image} />
-        <Text style={styles.title}>{recipe.name}</Text>
-        <Text style={styles.subtitle}>Hozzávalók:</Text>
-        {recipe.ingredients.map((ingredient, index) => (
-          <Text key={index} style={styles.text}>
-            - {ingredient}
-          </Text>
-        ))}
-        <Text style={styles.subtitle}>Elkészítési idő: {recipe.prep_time}</Text>
-        <Text style={styles.subtitle}>Elkészítés:</Text>
-        <Text style={styles.text}>{recipe.instructions}</Text>
       </View>
 
-      <TouchableOpacity
-        style={styles.favoriteButton}
-        onPress={isFavorite ? removeFromFavorites : addToFavorites}
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Image source={images[recipe.image]} style={styles.image} />
+
+        <View style={styles.card}>
+          <Text style={styles.title}>{recipe.name}</Text>
+
+          <View style={styles.sectionRow}>
+            <Icon
+              name="list-outline"
+              size={20}
+              color="#333"
+              style={styles.icon}
+            />
+            <Text style={styles.sectionTitle}>Hozzávalók</Text>
+          </View>
+          {recipe.ingredients.map((ingredient, index) => (
+            <Text key={index} style={styles.text}>
+              • {ingredient}
+            </Text>
+          ))}
+
+          <View style={styles.sectionRow}>
+            <Icon
+              name="time-outline"
+              size={20}
+              color="#333"
+              style={styles.icon}
+            />
+            <Text style={styles.sectionTitle}>Elkészítési idő</Text>
+          </View>
+          <Text style={styles.text}>{recipe.prep_time}</Text>
+
+          <View style={styles.sectionRow}>
+            <Icon
+              name="restaurant-outline"
+              size={20}
+              color="#333"
+              style={styles.icon}
+            />
+            <Text style={styles.sectionTitle}>Elkészítés</Text>
+          </View>
+          <Text style={styles.text}>{recipe.instructions}</Text>
+        </View>
+      </ScrollView>
+
+      <Animated.View
+        style={[styles.favoriteContainer, { transform: [{ rotate: spin }] }]}
       >
-        <Text style={styles.favoriteButtonText}>
-          {isFavorite
-            ? "Eltávolítás a kedvencekből"
-            : "Hozzáadás a kedvencekhez"}
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={toggleFavorite}
+          style={styles.favoriteButton}
+        >
+          <Icon
+            name={isFavorite ? "heart" : "heart-outline"}
+            size={40}
+            color={isFavorite ? "#ff3b30" : "#aaa"}
+          />
+        </TouchableOpacity>
+      </Animated.View>
     </SafeAreaView>
   );
 };
@@ -125,34 +154,85 @@ export default RecipeDetailScreen;
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#f2f2f2",
   },
-  container: { flex: 1, padding: 20 },
-  backButton: {
-    position: "absolute",
-    top: 20,
-    left: 20,
-    zIndex: 1,
-    padding: 10,
-  },
-  backButtonText: {
-    fontSize: 24,
-    color: "#000",
-  },
-  image: { width: "100%", height: 200, borderRadius: 10, marginTop: 60 },
-  title: { fontSize: 24, fontWeight: "bold", marginVertical: 10 },
-  subtitle: { fontSize: 18, fontWeight: "bold", marginTop: 10 },
-  text: { fontSize: 16, marginVertical: 5 },
-  favoriteButton: {
-    backgroundColor: "#ff6347",
-    padding: 15,
-    margin: 20,
-    borderRadius: 10,
+  scrollContainer: {
+    paddingBottom: 80,
     alignItems: "center",
+    paddingHorizontal: 16,
   },
-  favoriteButtonText: {
-    fontSize: 18,
-    color: "#fff",
+  headerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    marginTop: 10,
+  },
+  backButton: {
+    backgroundColor: "#fff",
+    padding: 10,
+    borderRadius: 30,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 2,
+    elevation: 3,
+  },
+  image: {
+    width: "100%",
+    height: 220,
+    borderRadius: 16,
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  card: {
+    backgroundColor: "#fff",
+    padding: 16,
+    borderRadius: 16,
+    width: "100%",
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  title: {
+    fontSize: 24,
     fontWeight: "bold",
+    marginBottom: 16,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "600",
+    marginBottom: 8,
+  },
+  sectionRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 16,
+  },
+  icon: {
+    marginRight: 8,
+  },
+  text: {
+    fontSize: 16,
+    marginBottom: 6,
+    color: "#333",
+  },
+  favoriteContainer: {
+    position: "absolute",
+    bottom: 20,
+    alignSelf: "center",
+    backgroundColor: "#fff",
+    padding: 14,
+    borderRadius: 50,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 6,
+    elevation: 5,
+  },
+  favoriteButton: {
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import recipesData from "../data/recipes.json";
-import images from "../utils/imageLoader"; // Importáljuk a képeket
+import images from "../utils/imageLoader";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const RecipeListScreen = ({ route, navigation }) => {
@@ -46,7 +46,7 @@ const RecipeListScreen = ({ route, navigation }) => {
                       color="#666"
                       style={{ marginRight: 4 }}
                     />
-                    <Text style={styles.prepTime}>{item.prep_time}</Text>
+                    <Text style={styles.prepTime}>{item.prep_time} perc</Text>
                   </View>
 
                   <Text style={styles.ingredients}>

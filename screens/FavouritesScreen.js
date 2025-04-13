@@ -9,14 +9,13 @@ import {
   Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import images from "../utils/imageLoader"; // Képek importja
+import images from "../utils/imageLoader";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 const FavouritesScreen = ({ navigation }) => {
   const [favourites, setFavourites] = useState([]);
 
-  // Kedvencek betöltése
   useEffect(() => {
     const loadFavourites = async () => {
       try {
@@ -42,7 +41,6 @@ const FavouritesScreen = ({ navigation }) => {
     loadFavourites();
   }, []);
 
-  // Recept eltávolítása
   const removeFavourite = async (recipeId) => {
     try {
       const userId = await AsyncStorage.getItem("currentUserId");
@@ -93,7 +91,7 @@ const FavouritesScreen = ({ navigation }) => {
           />
         ) : (
           <Text style={styles.noFavouritesText}>
-            Nincsenek kedvenc receptek.
+            Nincsenek kedvenc receptjeid.
           </Text>
         )}
       </SafeAreaView>
@@ -179,5 +177,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "gray",
     marginTop: 20,
+    width: "80%",
+    textAlign: "center",
   },
 });
